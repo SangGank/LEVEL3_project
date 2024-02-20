@@ -1,1 +1,10 @@
 *.mid
+*.pt
+*.json
+*.bin
+*.pth
+/models
+/output
+*.zip
+*0sh
+*.csv
