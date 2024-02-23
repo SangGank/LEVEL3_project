@@ -23,7 +23,7 @@ class MidiDataset(Dataset):
         self.labels = []
         self.tokenizer = tokenizer
 
-        for song_path in tqdm(files_paths):
+        for song_path in tqdm(files_paths, desc='Make Dataset'):
             song = self.tokenizer(song_path).ids[:max_length]
             song_length = len(song)
             attention = [1] * song_length
@@ -81,7 +81,7 @@ collator = DataCollator(
 )
 
 
-midi_paths = list(Path("jazz_max_token").glob("**/*.mid"))
+midi_paths = list(Path("lakh_max_token").glob("**/*.mid"))
 
 total_num_files = len(midi_paths)
 num_files_valid = round(total_num_files * 0.1) # Validation 비율 자유롭게 변경
@@ -151,7 +151,7 @@ config = AutoConfig.from_pretrained(
 
 model = GPT2LMHeadModel(config)
 output_path = "model_none"
-steps = 200
+steps = 1000
 # Commented parameters correspond to the small model
 config = {"output_dir": output_path,
           "num_train_epochs": 30, # 학습 epoch 자유롭게 변경. 저는 30 epoch 걸어놓고 early stopping 했습니다.
